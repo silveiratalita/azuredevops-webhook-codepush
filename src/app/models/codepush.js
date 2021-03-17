@@ -1,6 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 import Ajv from 'ajv';
-import getPolicies from '../../service/api/getPolicies';
+
+import getPolicyType from '../../service/api/getPolicyType';
 
 class CodePush extends Model {
   static init(sequelize) {
@@ -39,8 +40,12 @@ class CodePush extends Model {
 
   static async createCodePush(event) {
     // const newCodePush = new CodePush(event);
-    const { data } = await getPolicies('ss', 'ss');
-    console.log('POLICIES', data.value[0]);
+    // const { data } = await getPolicies('orhaniation', 'projectId','repositoryId','refname',);
+    const data = await getPolicyType(
+      'kroton_poc',
+      'd2e4dd3b-7593-4d6c-93ad-f0cb8fb1c374'
+    );
+
     // const CodePushSaved = await newCodePush.save();
     // console.log('salvo', CodePushSaved);
     // return CodePushSaved;
