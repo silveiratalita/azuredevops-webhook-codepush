@@ -36,15 +36,33 @@ class CodePush extends Model {
     );
   }
 
-  static setCodePush() {}
+  static async setRepoWithPolicy(data, repositoryId) {
+    // eslint-disable-next-line no-return-assign
+    let repoToSave;
+    for (let i = 0; i < data.lenght; i + 1) {
+      if (
+        data[i].haspolicie === true &&
+        data[i].repositoryId === repositoryId
+      ) {
+        // tenho que setar que a politica é falsa
+        // como ainda não ajeitei o banco vou botar em um objeto
+        repoToSave = { haspolicie: true, repositoryId };
+        // ai vou salvar o repo q tenho com as politicas que ele ha tem no projeto dele + os dados do push
+      }
+    }
+    if (repoToSave === false) {
+      throw new Error('This Repoitory has no Policies');
+    }
+    console.log('repoto save', repoToSave);
+  }
 
   static async createCodePush(event) {
     // const newCodePush = new CodePush(event);
     // const { data } = await getPolicies('orhaniation', 'projectId','repositoryId','refname',);
-    const data = await getPolicyType(
-      'kroton_poc',
-      'd2e4dd3b-7593-4d6c-93ad-f0cb8fb1c374'
-    );
+    const projectId = event.resourceContainers.project.id;
+    const repositoryId = event.resource.repository;
+    const data = await getPolicyType(projectId, repositoryId);
+    this.setRepoWithPolicy(data);
 
     // const CodePushSaved = await newCodePush.save();
     // console.log('salvo', CodePushSaved);

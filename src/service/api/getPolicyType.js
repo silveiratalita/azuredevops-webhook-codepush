@@ -16,14 +16,17 @@ async function getPolicies(projectId, _repositoryId) {
       policieCreateDate: e.createdDate,
       isBloked: e.isBlocking,
       isDeleted: e.isDeleted,
+      isEnabled: e.isEnabled,
+      policyCreatedDate: e.createdDate,
       revision: e.revision,
       idconfigurationPolicy: e.id,
       url: e.url,
       typePolicyId: e.type.id,
       typePolicyUrl: e.type.url,
-      typePolicyDusplayName: e.type.displayName,
+      typePolicyDisplayName: e.type.displayName,
     }))
   );
+  policyAndRepo.map(e => console.log(e));
   return policyAndRepo;
 }
 
