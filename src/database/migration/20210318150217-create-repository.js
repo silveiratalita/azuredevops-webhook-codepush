@@ -25,10 +25,6 @@ module.exports = {
       policy_id_configuration: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'policies',
-          key: 'id_configuration_policy',
-        },
       },
       type_policy_dysplay_name: {
         type: Sequelize.STRING,
@@ -39,10 +35,6 @@ module.exports = {
       project_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'projects',
-          key: 'project_id',
-        },
       },
       last_update: {
         type: Sequelize.DATE,

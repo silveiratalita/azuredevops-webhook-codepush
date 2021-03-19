@@ -12,7 +12,7 @@ async function getPolicies(projectId, _repositoryId) {
       repositoryId: el.repositoryId,
       refNameBranch: el.refName,
       matchKind: el.matchKind,
-      haspolicie: el.repositoryId === _repositoryId,
+      hasPolicie: el.repositoryId === _repositoryId,
       policieCreateDate: e.createdDate,
       isBloked: e.isBlocking,
       isDeleted: e.isDeleted,
@@ -26,8 +26,20 @@ async function getPolicies(projectId, _repositoryId) {
       typePolicyDisplayName: e.type.displayName,
     }))
   );
-  policyAndRepo.map(e => console.log(e));
-  return policyAndRepo;
+  let repoHasPolicy;
+  for (let i = 0; i < policyAndRepo.lenght; i + 1) {
+    if (
+      policyAndRepo[i].hasPolicie === true &&
+      policyAndRepo[i].repositoryId === _repositoryId
+    ) {
+      repoHasPolicy = [
+        policyAndRepo[i],
+        { hasPolicie: true, repositoryId: _repositoryId },
+      ];
+    }
+    return repoHasPolicy;
+  }
+  return { hasPolicie: false };
 }
 
 export default getPolicies;

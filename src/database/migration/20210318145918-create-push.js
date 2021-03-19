@@ -10,10 +10,6 @@ module.exports = {
       repository_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'repos',
-          key: 'repository_id',
-        },
       },
       event_type: {
         type: Sequelize.STRING,
@@ -24,10 +20,6 @@ module.exports = {
       user_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'users',
-          key: 'user_id',
-        },
       },
       repository_name: {
         type: Sequelize.STRING,
