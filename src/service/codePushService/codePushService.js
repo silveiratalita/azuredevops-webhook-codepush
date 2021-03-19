@@ -2,11 +2,11 @@ import getPolicyType from '../api/getPolicyType';
 
 function setPush(event) {
   const push = {
-    repository_id: event.repository.id,
+    repository_id: event.resource.repository.id,
     event_type: event.eventType,
-    user_name: event.pushedBy.displayName,
-    user_id: event.pushedBy.id,
-    repository_name: event.repository.name,
+    user_name: event.resource.pushedBy.displayName,
+    user_id: event.resource.pushedBy.id,
+    repository_name: event.resource.repository.name,
     date: event.createdDate,
   };
   return push;
@@ -23,18 +23,21 @@ function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
     project_id: repositoryData.id,
     last_update: lastUpdate,
   };
-  if (repositoryHasPolicy === {} && repositoryHasPolicy.hasPolicie === false) {
+
+  if (
+    typeof repositoryHasPolicy === 'object' &&
+    repositoryHasPolicy.hasPolicie === false
+  ) {
     repository.policy_id_configuration = null;
     repository.type_policy_dysplay_name = null;
     repository.has_policy = false;
+  } else {
+    repository.policy_id_configuration =
+      repositoryHasPolicy[0].idconfigurationPolicy;
+    repository.type_policy_dysplay_name =
+      repositoryHasPolicy[0].typePolicyDisplayName;
+    repository.has_policy = repositoryHasPolicy[0].hasPolicie;
   }
-
-  repository.policy_id_configuration =
-    repositoryHasPolicy[0].idconfigurationPolicy;
-  repository.type_policy_dysplay_name =
-    repositoryHasPolicy[0].typePolicyDisplayName;
-  repository.has_policy = repositoryHasPolicy[0].hasPolicie;
-
   return repository;
 }
 
@@ -50,7 +53,7 @@ async function setObjects(event) {
   const push = setPush(event);
   const repository = setRepository(
     repositoryHasPolicy,
-    event.repository,
+    event.resource.repository,
     event.createdDate
   );
   return { push, repository };
