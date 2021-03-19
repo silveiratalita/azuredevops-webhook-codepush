@@ -1,6 +1,4 @@
-import Sequelize, { Model } from 'sequelize';
-import Project from './project';
-import Policy from './policy';
+import Sequelize, { DataTypes, Model } from 'sequelize';
 
 class RepositoryPolicy extends Model {
   static init(sequelize) {
@@ -10,18 +8,17 @@ class RepositoryPolicy extends Model {
           type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
-          unique: true,
         },
         repository_id: Sequelize.STRING,
         policy_id: Sequelize.STRING,
+        branch_name: Sequelize.STRING,
+        last_update: Sequelize.DATE,
       },
       {
         sequelize,
-        modelName: 'repository_policies',
       }
     );
-    // RepositoryPolicy.hasMany(Policy, { foreignKey: 'id_configuration_policy' });
-    // RepositoryPolicy.hasMany(Project, { foreignKey: 'project_id' });
   }
 }
+
 export default RepositoryPolicy;
