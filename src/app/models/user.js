@@ -12,6 +12,7 @@ class User extends Model {
         },
         user_id: Sequelize.STRING,
         name: Sequelize.STRING,
+        email: Sequelize.STRING,
         member_of: Sequelize.ARRAY(Sequelize.STRING),
         member: Sequelize.ARRAY(Sequelize.STRING),
       },

@@ -13,6 +13,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      email: {
+        type: Sequelize.STRING,
+      },
       member_of: {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },

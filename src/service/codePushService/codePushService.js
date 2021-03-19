@@ -40,9 +40,21 @@ function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
   return repository;
 }
 
-function setUser() {}
-function setRepositoryPolicy() {}
-function setPolicy() {}
+function setUser(event) {
+  const userObject = {
+    user_id: event.resource.pushedBy.id,
+    name: event.resource.commits[0].author.name,
+    email: event.resource.commits[0].author.email,
+    member_of: [],
+    member: []
+  }
+
+  return  userObject
+}
+
+
+function setRepositoryPolicy() { }
+function setPolicy() { }
 
 function setProject(event) {
   const project = {
@@ -66,6 +78,8 @@ async function setObjects(event) {
   );
   const project = setProject(event);
 
-  return { push, repository, project };
+  const user = setUser(event)
+
+  return { push, repository, project, user };
 }
 export default setObjects;
