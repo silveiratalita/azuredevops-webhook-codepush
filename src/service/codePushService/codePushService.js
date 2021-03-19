@@ -1,5 +1,14 @@
 import getPolicyType from '../api/getPolicyType';
 
+function veryfyPolicy(repositoryHasPolicy) {
+  if (
+    typeof repositoryHasPolicy === 'object' &&
+    repositoryHasPolicy.hasPolicie === false
+  ) {
+    return false;
+  }
+  return true;
+}
 function setPush(event) {
   const push = {
     repository_id: event.resource.repository.id,
@@ -12,9 +21,8 @@ function setPush(event) {
   return push;
 }
 
-function setPolicy() {}
-
 function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
+  const hasPolicy = veryfyPolicy(repositoryHasPolicy);
   const repository = {
     name: repositoryData.name,
     url: repositoryData.url,
@@ -22,31 +30,31 @@ function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
     ref_name_branch: repositoryData.defaultBranch,
     project_id: repositoryData.id,
     last_update: lastUpdate,
+    policy_id_configuration:
+      hasPolicy === true ? repositoryHasPolicy[0].idconfigurationPolicy : null,
+    type_policy_dysplay_name:
+      hasPolicy === true ? repositoryHasPolicy[0].typePolicyDisplayName : null,
+    has_policy: hasPolicy === true,
   };
 
-  if (
-    typeof repositoryHasPolicy === 'object' &&
-    repositoryHasPolicy.hasPolicie === false
-  ) {
-    repository.policy_id_configuration = null;
-    repository.type_policy_dysplay_name = null;
-    repository.has_policy = false;
-  } else {
-    repository.policy_id_configuration =
-      repositoryHasPolicy[0].idconfigurationPolicy;
-    repository.type_policy_dysplay_name =
-      repositoryHasPolicy[0].typePolicyDisplayName;
-    repository.has_policy = repositoryHasPolicy[0].hasPolicie;
-  }
   return repository;
 }
 
 function setUser() {}
-function setProject() {}
 function setRepositoryPolicy() {}
+function setPolicy() {}
+
+function setProject(event) {
+  const project = {
+    project_id: event.resource.repository.project.id,
+    name: event.resource.repository.project.name,
+    url: event.resource.repository.project.url,
+  };
+  return project;
+}
 
 async function setObjects(event) {
-  const projectId = event.resourceContainers.project.id;
+  const projectId = event.resource.repository.project.id;
   const repositoryId = event.resource.repository;
   const repositoryHasPolicy = await getPolicyType(projectId, repositoryId);
 
@@ -56,6 +64,8 @@ async function setObjects(event) {
     event.resource.repository,
     event.createdDate
   );
-  return { push, repository };
+  const project = setProject(event);
+
+  return { push, repository, project };
 }
 export default setObjects;
