@@ -20,10 +20,43 @@ function setPush(event) {
   };
   return push;
 }
+function setRepositoryPolicy(data) {
+  const repositoryPolicy = {
+    repository_id: data.repository_id,
+    policy_id: data.policy_id_configuration,
+    branch_name: data.dafault_branch,
+    last_update: data.last_update,
+  };
+  return repositoryPolicy;
+}
+function setPolicy(repositoryHasPolicy) {
+  const hasPolicy = veryfyPolicy(repositoryHasPolicy);
+  const policyObj = repositoryHasPolicy[0];
+  let policy;
 
+  if (hasPolicy) {
+    policy = {
+      id_configuration_policy: policyObj.idconfigurationPolicy,
+      required_reviwers: policyObj.requiredReviwersIds.map(e => e),
+      ref_name_branch: policyObj.refNameBranch,
+      match_kind: policyObj.matchKind,
+      is_blocked: policyObj.isBloked,
+      is_deleted: policyObj.isDeleted,
+      is_enabled: policyObj.isEnabled,
+      revision: policyObj.revision,
+      url: policyObj.url,
+      type_policy_id: policyObj.typePolicyId,
+      type_policy_url: policyObj.typePolicyUrl,
+      type_policy_display_name: policyObj.typePolicyDisplayName,
+    };
+    return policy;
+  }
+  return {};
+}
 function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
   const hasPolicy = veryfyPolicy(repositoryHasPolicy);
   const repository = {
+    repository_id: repositoryData.id,
     name: repositoryData.name,
     url: repositoryData.url,
     dafault_branch: repositoryData.defaultBranch,
@@ -37,7 +70,13 @@ function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
     has_policy: hasPolicy === true,
   };
 
-  return repository;
+  if (hasPolicy) {
+    const policy = setPolicy(repositoryHasPolicy);
+    const repositoryPolicy = setRepositoryPolicy(repository);
+    return { repository, policy, repositoryPolicy };
+  }
+
+  return { repository };
 }
 
 function setUser(event) {
@@ -46,15 +85,11 @@ function setUser(event) {
     name: event.resource.commits[0].author.name,
     email: event.resource.commits[0].author.email,
     member_of: [],
-    member: []
-  }
+    member: [],
+  };
 
-  return  userObject
+  return userObject;
 }
-
-
-function setRepositoryPolicy() { }
-function setPolicy() { }
 
 function setProject(event) {
   const project = {
@@ -78,7 +113,7 @@ async function setObjects(event) {
   );
   const project = setProject(event);
 
-  const user = setUser(event)
+  const user = setUser(event);
 
   return { push, repository, project, user };
 }
