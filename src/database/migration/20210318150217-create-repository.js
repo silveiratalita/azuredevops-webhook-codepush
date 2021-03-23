@@ -24,7 +24,7 @@ module.exports = {
       },
       policy_id_configuration: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       type_policy_dysplay_name: {
         type: Sequelize.STRING,
@@ -34,7 +34,7 @@ module.exports = {
       },
       project_id: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       last_update: {
         type: Sequelize.DATE,

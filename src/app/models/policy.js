@@ -32,7 +32,7 @@ class Policy extends Model {
   }
 
   static async createOrUpdatePolicy(policy) {
-    const policyFound = await Repository.findOne({
+    const policyFound = await Policy.findOne({
       where: {
         id_configuration_policy: policy.id_configuration_policy,
       },

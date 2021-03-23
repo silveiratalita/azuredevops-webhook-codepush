@@ -31,5 +31,21 @@ class Repository extends Model {
     // Repository.hasMany(Policy, { foreignKey: 'id_configuration_policy' });
     // Repository.belongsTo(Project, { foreignKey: 'project_id' });
   }
+
+  static async createOrUpdateRepository({ repository }) {
+    console.log(repository);
+    const repositoryFound = await Repository.findOne({
+      where: {
+        repository_id: repository.repository_id,
+      },
+    });
+    const newRepository = new Repository(repository);
+    if (repositoryFound) {
+      const repositoryUpdated = await newRepository.update();
+      return repositoryUpdated;
+    }
+    const repositoryCreated = await Repository.create(repository);
+    return repositoryCreated;
+  }
 }
 export default Repository;
