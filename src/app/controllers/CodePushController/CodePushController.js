@@ -1,5 +1,4 @@
 'use strict';
-import codepush from '../../models/codepush';
 import Push from '../../models/push';
 import getPolicyType from '../../../service/api/getPolicyType';
 import setObjects from '../../../service/codePushService/codePushService';
@@ -28,8 +27,18 @@ class CodePushController {
 
       pushObjectSaved.push(
         { push: pushSaved },
-        { user: userSaved },
-        { project: projectSaved }
+        {
+          user:
+            userSaved === true
+              ? { userCreated: userSaved }
+              : { userCreated: userSaved },
+        },
+        {
+          project:
+            projectSaved === true
+              ? { ProjectCreated: projectSaved }
+              : { projectCreated: projectSaved },
+        }
       );
 
       if (Array.isArray(objects.repository)) {
@@ -47,7 +56,6 @@ class CodePushController {
           { repositoryPOlicy: repoPolicySaved }
         );
       } else {
-        // console.log('repositorydata aqui no controler', objects.repository);
         const repoSaved = await Repository.createOrUpdateRepository(
           objects.repository
         );

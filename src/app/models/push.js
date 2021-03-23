@@ -30,7 +30,6 @@ class Push extends Model {
   static async createPush(push) {
     const newPush = new Push(push);
     const pushSaved = await newPush.save();
-    console.log('salvo', pushSaved);
     return pushSaved;
   }
 }

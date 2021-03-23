@@ -1,4 +1,6 @@
 import Sequelize, { DataTypes, Model } from 'sequelize';
+import Repository from './repository';
+import Policy from './policy';
 
 class RepositoryPolicy extends Model {
   static init(sequelize) {
@@ -18,6 +20,8 @@ class RepositoryPolicy extends Model {
         sequelize,
       }
     );
+    RepositoryPolicy.hasMany(Repository, { foreignKey: 'repository_id' });
+    RepositoryPolicy.hasMany(Policy, { foreignKey: 'id_configuration_policy' });
   }
 
   static async createOrUpdateRepositoryPolicy(repoPolicy) {

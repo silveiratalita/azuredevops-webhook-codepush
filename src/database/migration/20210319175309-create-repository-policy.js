@@ -9,9 +9,11 @@ module.exports = {
       },
       repository_id: {
         type: Sequelize.STRING,
+        reference: { model: 'Repository', key: 'repository_id' },
       },
       policy_id: {
         type: Sequelize.STRING,
+        reference: { model: 'Policy', key: 'id_configuration_policy' },
       },
       branch_name: {
         type: Sequelize.STRING,

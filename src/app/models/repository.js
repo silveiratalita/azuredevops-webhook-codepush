@@ -33,27 +33,34 @@ class Repository extends Model {
   }
 
   static async createOrUpdateRepository({ repository }) {
-    console.log(repository);
-    const repositoryFound = await Repository.findOne({
+    const repoFound = await Repository.findOne({
       where: {
         repository_id: repository.repository_id,
         dafault_branch: repository.dafault_branch,
       },
     });
-    const newRepository = new Repository(repository);
-    if (repositoryFound) {
-      const repositoryUpdated = await newRepository.update({
-        has_policy: repository.has_policy,
-        type_policy_dysplay_name: repository.type_policy_dysplay_name,
-        policy_id_configuration: repository.policy_id_configuration,
-        last_update: repository.last_update,
-        project_id: repository.project_id,
-        repository_id: repository.repository_id,
-        name: repository.name,
-        url: repository.url,
-        dafault_branch: repository.dafault_branch,
-        ref_name_branch: repository.ref_name_branch,
-      });
+
+    if (repoFound) {
+      const repositoryUpdated = await Repository.update(
+        {
+          has_policy: repository.has_policy,
+          type_policy_dysplay_name: repository.type_policy_dysplay_name,
+          policy_id_configuration: repository.policy_id_configuration,
+          last_update: repository.last_update,
+          project_id: repository.project_id,
+          repository_id: repository.repository_id,
+          name: repository.name,
+          url: repository.url,
+          dafault_branch: repository.dafault_branch,
+          ref_name_branch: repository.ref_name_branch,
+        },
+        {
+          where: {
+            repository_id: repoFound.dataValues.repository_id,
+            id: repoFound.dataValues.id,
+          },
+        }
+      );
       return repositoryUpdated;
     }
     const repositoryCreated = await Repository.create(repository);

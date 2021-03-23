@@ -37,12 +37,26 @@ class Policy extends Model {
         id_configuration_policy: policy.id_configuration_policy,
       },
     });
-    const newPolicy = new Policy(policy);
     if (policyFound) {
-      const policyUpdated = await newPolicy.update();
+      const policyUpdated = await Policy.update(
+        {
+          required_reviwers: policy.required_reviwers,
+          ref_name_branch: policy.ref_name_branch,
+          match_kind: policy.match_kind,
+          is_blocked: policy.is_blocked,
+          is_deleted: policy.is_deleted,
+          is_enabled: policy.is_enabled,
+          revision: policy.revision,
+          url: policy.url,
+          type_policy_id: policy.type_policy_id,
+          type_policy_url: policy.type_policy_url,
+          type_policy_display_name: policy.type_policy_display_name,
+        },
+        { where: { id: policyFound.dataValues.id } }
+      );
       return policyUpdated;
     }
-    const policyCreated = await newPolicy.create();
+    const policyCreated = await Policy.create(policy);
     return policyCreated;
   }
 }
