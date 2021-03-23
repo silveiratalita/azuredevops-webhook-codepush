@@ -55,13 +55,14 @@ function setPolicy(repositoryHasPolicy) {
 }
 function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
   const hasPolicy = veryfyPolicy(repositoryHasPolicy);
+
   const repository = {
     repository_id: repositoryData.id,
     name: repositoryData.name,
     url: repositoryData.url,
     dafault_branch: repositoryData.defaultBranch,
     ref_name_branch: repositoryData.defaultBranch,
-    project_id: repositoryData.id,
+    project_id: repositoryData.project.id,
     last_update: lastUpdate,
     policy_id_configuration:
       hasPolicy === true ? repositoryHasPolicy[0].idconfigurationPolicy : null,
@@ -73,7 +74,7 @@ function setRepository(repositoryHasPolicy, repositoryData, lastUpdate) {
   if (hasPolicy) {
     const policy = setPolicy(repositoryHasPolicy);
     const repositoryPolicy = setRepositoryPolicy(repository);
-    return { repository, policy, repositoryPolicy };
+    return [repository, policy, repositoryPolicy];
   }
 
   return { repository };

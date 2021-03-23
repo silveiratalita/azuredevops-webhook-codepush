@@ -6,13 +6,12 @@ class Push extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
+        repository_id: {
+          type: Sequelize.STRING,
           autoIncrement: true,
           primaryKey: true,
           unique: true,
         },
-        repository_id: Sequelize.STRING,
         event_type: Sequelize.STRING,
         user_name: Sequelize.STRING,
         user_id: Sequelize.STRING,
@@ -30,7 +29,6 @@ class Push extends Model {
 
   static async createPush(push) {
     const newPush = new Push(push);
-
     const pushSaved = await newPush.save();
     console.log('salvo', pushSaved);
     return pushSaved;

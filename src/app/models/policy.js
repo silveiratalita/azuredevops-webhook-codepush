@@ -30,6 +30,21 @@ class Policy extends Model {
     );
     // Policy.hasMany(Repository, { foreignKey: 'repository_id' });
   }
+
+  static async createOrUpdatePolicy(policy) {
+    const policyFound = await Repository.findOne({
+      where: {
+        id_configuration_policy: policy.id_configuration_policy,
+      },
+    });
+    const newPolicy = new Policy(policy);
+    if (policyFound) {
+      const policyUpdated = await newPolicy.update();
+      return policyUpdated;
+    }
+    const policyCreated = await newPolicy.create();
+    return policyCreated;
+  }
 }
 
 export default Policy;
