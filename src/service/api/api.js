@@ -7,6 +7,5 @@ const url = axios.create({
     'Content-Type': 'application/json',
     Authorization: `Basic ${process.env.TOKEN}`,
   },
-  Authorization: 'zzp7dtwup2t5roff3galgh5dd2kdipshqgqtjoh5bwr6koxnqliq',
 });
 export default url;
