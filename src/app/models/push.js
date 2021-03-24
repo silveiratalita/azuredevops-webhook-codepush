@@ -1,6 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import User from './user';
-import Repository from './repository';
 
 class Push extends Model {
   static init(sequelize) {

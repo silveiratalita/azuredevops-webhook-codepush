@@ -124,3 +124,5 @@
   "client_ip": "20.37.158.4",
   "query": {}
 }
+
+yarn sequelize-cli model:generate --name Repository --attributes id:integer,repository_id:string,name:string,url:string,dafault_branch:string,ref_name_branch:string,policy_id_configuration:string,type_policy_dysplay_name:string,has_policy:boolean,project_id:string,last_update:date

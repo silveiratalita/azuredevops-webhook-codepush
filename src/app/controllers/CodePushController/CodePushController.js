@@ -1,6 +1,5 @@
 'use strict';
 import Push from '../../models/push';
-import getPolicyType from '../../../service/api/getPolicyType';
 import setObjects from '../../../service/codePushService/codePushService';
 import Project from '../../models/project';
 import Repository from '../../models/repository';
@@ -11,7 +10,6 @@ import User from '../../models/user';
 class CodePushController {
   store = async (req, res) => {
     try {
-      // const CodePushSaved = await codepush.createCodePush(req.body);
       let pushObjectSaved = [];
       const objects = await setObjects(req.body);
       const pushSaved = await Push.create(objects.push);

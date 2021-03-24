@@ -1,4 +1,4 @@
-import Sequelize, { DataTypes, Model } from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 import Repository from './repository';
 import Policy from './policy';
 

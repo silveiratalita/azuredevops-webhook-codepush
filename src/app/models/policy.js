@@ -1,5 +1,4 @@
-import Sequelize, { DataTypes, Model } from 'sequelize';
-import Repository from './repository';
+import Sequelize, { Model } from 'sequelize';
 
 class Policy extends Model {
   static init(sequelize) {

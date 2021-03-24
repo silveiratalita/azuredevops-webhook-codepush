@@ -1,6 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import Project from './project';
-import Policy from './policy';
 
 class Repository extends Model {
   static init(sequelize) {
@@ -57,7 +55,6 @@ class Repository extends Model {
         {
           where: {
             repository_id: repoFound.dataValues.repository_id,
-            id: repoFound.dataValues.id,
           },
         }
       );
