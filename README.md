@@ -44,7 +44,11 @@ Node 12
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias
 
-- Node js, sequelize, postgres, express,docker
+- Node js, 
+- Sequelize, 
+- Postgres, 
+- Express,
+- Docker
 
 ## :link: Como contribuir 
 
