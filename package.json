@@ -17,7 +17,8 @@
     "sequelize": "^5.21.2"
   },
   "scripts": {
-    "start": "yarn && node server.js",
+    "start": "node server.js",
+    "npm-rum-migrate": "npm sequelize db:migrate",
     "predev": "yarn && yarn docker-up",
     "dev": "nodemon src/server.js",
     "docker-up": "docker-compose -f docker-compose-dev.yml up -d",
