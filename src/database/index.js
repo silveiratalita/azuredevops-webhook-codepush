@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import databaseConfig from '../config/config';
+import databaseConfig from '../config/database';
 import Push from '../app/models/push';
 import Repository from '../app/models/repository';
 import Policy from '../app/models/policy';
