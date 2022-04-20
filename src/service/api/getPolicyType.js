@@ -2,7 +2,7 @@ import api from './api';
 
 async function getPolicies(projectId, _repositoryId) {
   const { data } = await api.get(
-    `kdop/${projectId}/_apis/policy/configurations?api-version=6.1-preview.1`
+    `<project>/${projectId}/_apis/policy/configurations?api-version=6.1-preview.1`
   );
   const policyAndRepo = data.value.map(e =>
     e.settings.scope.map(el => ({
